@@ -12,10 +12,9 @@ import com.example.tmdbpopularmovie.models.MovieItem
 import com.squareup.picasso.Picasso
 
 class MainAdapter : ListAdapter<MovieItem, MainAdapter.MainViewHolder>(DiffUtilItemCallBack()) {
-    class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = ItemLayoutBinding.bind(itemView)
 
-    }
+    var onClickListener: ((MovieItem) -> Unit)? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
@@ -29,7 +28,15 @@ class MainAdapter : ListAdapter<MovieItem, MainAdapter.MainViewHolder>(DiffUtilI
         Picasso.get()
             .load(BASE_IMG_URL + item.poster_path)
             .centerCrop()
-            .resize(100, 100)
+            .resize(300, 300)
             .into(holder.binding.itemImage)
+        holder.itemView.setOnClickListener {
+            onClickListener?.invoke(item)
+        }
+    }
+
+    class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ItemLayoutBinding.bind(itemView)
+
     }
 }

@@ -6,11 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("3/movie/popular?api_key=cafa669d828b93b4e5f024b227e17c34&language=en-US&page=1")
+    @GET("3/movie/popular?")
     suspend fun getPopularMovie(
-//        @Query(QUERY_API_KEY) apiKey: String = API_KEY,
-//        @Query(QUERY_LANGUAGE) language: String = LANGUAGE,
-//        @Query(QUERY_PAGE) page: String = PAGE
+        @Query(QUERY_API_KEY) apiKey: String = API_KEY,
+        @Query(QUERY_LANGUAGE) language: String = LANGUAGE,
+        @Query(QUERY_PAGE) page: String = PAGE
     ): Response<TMDBInformation>
 
     companion object {
