@@ -1,9 +1,13 @@
 package com.example.tmdbpopularmovie.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "movie_table")
 data class MovieItem(
     val adult: Boolean,
     val backdrop_path: String,
-    val genre_ids: List<Int>,
+    @PrimaryKey
     val id: Int,
     val original_language: String,
     val original_title: String,
