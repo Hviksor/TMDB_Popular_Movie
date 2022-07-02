@@ -39,6 +39,9 @@ class FavoriteFragment : Fragment() {
         rcView = binding.rcViewFavorite
         mainAdapter = MainAdapter()
         rcView.adapter = mainAdapter
+        viewMode.getAllMovies().observe(viewLifecycleOwner) {
+            mainAdapter.submitList(it.asReversed())
+        }
     }
 
 

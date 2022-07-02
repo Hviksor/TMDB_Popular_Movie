@@ -1,16 +1,16 @@
 package com.example.tmdbpopularmovie.screens.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.example.tmdbpopularmovie.BASE_IMG_URL
 import com.example.tmdbpopularmovie.R
 import com.example.tmdbpopularmovie.databinding.FragmentDetailBinding
-import com.example.tmdbpopularmovie.databinding.FragmentFavoriteBinding
 import com.example.tmdbpopularmovie.models.MovieItem
-import com.example.tmdbpopularmovie.screens.favorites.FavoriteFragmentViewModel
 import com.example.tmdbpopularmovie.screens.main.MainFragment
 import com.squareup.picasso.Picasso
 
@@ -19,7 +19,7 @@ class DetailFragment : Fragment() {
     private lateinit var currentMovieItem: MovieItem
     private var mBinding: FragmentDetailBinding? = null
     private val binding get() = mBinding!!
-    lateinit var viewMode: DetailFragmentViewModel
+    lateinit var viewModel: DetailFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +33,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[DetailFragmentViewModel::class.java]
         initFields()
     }
 
@@ -47,10 +48,12 @@ class DetailFragment : Fragment() {
         binding.tvDescription.text = currentMovieItem.overview
         binding.imgDetail.setOnClickListener {
             isFavorite = if (!isFavorite) {
-                binding.imgDetail.setImageResource(R.drawable.ic_baseline_favorite_24)
+                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                viewModel.insert(currentMovieItem) {}
                 true
             } else {
-                binding.imgDetail.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                viewModel.delete(currentMovieItem) {}
                 false
             }
         }

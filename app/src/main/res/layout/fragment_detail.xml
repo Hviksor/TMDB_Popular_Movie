@@ -53,6 +53,7 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:text="Title"
+                android:gravity="center"
                 android:textColor="@color/teal_700"
                 android:textSize="24sp"
                 android:textStyle="bold"

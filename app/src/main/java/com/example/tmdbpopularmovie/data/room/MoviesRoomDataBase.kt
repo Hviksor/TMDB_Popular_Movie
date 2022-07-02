@@ -7,19 +7,23 @@ import androidx.room.RoomDatabase
 import com.example.tmdbpopularmovie.data.room.dao.MoviesDao
 import com.example.tmdbpopularmovie.models.MovieItem
 
-@Database(entities = [MovieItem::class], version = 2)
+@Database(entities = [MovieItem::class], version = 4)
 abstract class MoviesRoomDataBase : RoomDatabase() {
     abstract fun getDao(): MoviesDao
 
     companion object {
-        private val db: MoviesRoomDataBase? = null
+        private var database: MoviesRoomDataBase? = null
 
         fun getInstanceDB(context: Context): MoviesRoomDataBase {
-            return if (db == null) {
-                val db = Room.databaseBuilder(context, RoomDatabase::class.java, "db").build()
-                db as MoviesRoomDataBase
+            return if (database == null) {
+                database = Room.databaseBuilder(
+                    context,
+                    MoviesRoomDataBase::class.java,
+                    "db"
+                ).build()
+                database as MoviesRoomDataBase
             } else {
-                db as MoviesRoomDataBase
+                database as MoviesRoomDataBase
             }
 
         }
