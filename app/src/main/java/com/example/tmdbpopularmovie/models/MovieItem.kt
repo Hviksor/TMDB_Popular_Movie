@@ -1,6 +1,5 @@
 package com.example.tmdbpopularmovie.models
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -12,15 +11,11 @@ data class MovieItem(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val original_language: String,
-
     val original_title: String,
-    @ColumnInfo
     val overview: String,
     val popularity: Double,
-    @ColumnInfo
     val poster_path: String,
     val release_date: String,
-    @ColumnInfo
     val title: String,
     val video: Boolean,
     val vote_average: Double,

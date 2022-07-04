@@ -27,22 +27,9 @@ class FavoriteFragment : Fragment() {
     ): View {
         mBinding = FragmentFavoriteBinding.inflate(inflater, container, false)
         hasOptionsMenu()
-        initMenu()
         return binding.root
     }
 
-    private fun initMenu() {
-        val menuHost = requireActivity()
-        menuHost.addMenuProvider(object :MenuProvider{
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                TODO("Not yet implemented")
-            }
-        })
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

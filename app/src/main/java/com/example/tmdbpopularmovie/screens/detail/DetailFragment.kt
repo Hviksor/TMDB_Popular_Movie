@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.example.tmdbpopularmovie.APP
 import com.example.tmdbpopularmovie.BASE_IMG_URL
 import com.example.tmdbpopularmovie.R
+import com.example.tmdbpopularmovie.SaveShared
 import com.example.tmdbpopularmovie.databinding.FragmentDetailBinding
 import com.example.tmdbpopularmovie.models.MovieItem
 import com.example.tmdbpopularmovie.screens.main.MainFragment
@@ -33,11 +35,17 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isFavorite = SaveShared.getFavorite(APP, currentMovieItem.id)
         viewModel = ViewModelProvider(this)[DetailFragmentViewModel::class.java]
         initFields()
     }
 
     private fun initFields() {
+        if (!isFavorite) {
+            binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        } else {
+            binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+        }
         Picasso.get()
             .load(BASE_IMG_URL + currentMovieItem.poster_path)
             .centerCrop()
@@ -49,10 +57,12 @@ class DetailFragment : Fragment() {
         binding.imgDetail.setOnClickListener {
             isFavorite = if (!isFavorite) {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                SaveShared.setFavorite(APP, currentMovieItem.id, !isFavorite)
                 viewModel.insert(currentMovieItem) {}
                 true
             } else {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                SaveShared.setFavorite(APP, currentMovieItem.id, !isFavorite)
                 viewModel.delete(currentMovieItem) {}
                 false
             }
