@@ -1,10 +1,10 @@
 package com.example.tmdbpopularmovie.screens.favorites
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbpopularmovie.R
@@ -26,8 +26,24 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        hasOptionsMenu()
+        initMenu()
         return binding.root
     }
+
+    private fun initMenu() {
+        val menuHost = requireActivity()
+        menuHost.addMenuProvider(object :MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

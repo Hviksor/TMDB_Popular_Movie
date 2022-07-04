@@ -26,7 +26,7 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentDetailBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
+        hasOptionsMenu()
         currentMovieItem = arguments?.getSerializable(MainFragment.EXTRA_MOVIE) as MovieItem
         return binding.root
     }
