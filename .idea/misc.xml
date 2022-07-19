@@ -5,13 +5,16 @@
       <map>
         <entry key="..\:/Users/Ololo/AndroidStudioProjects/TMDB_Popular_Movie/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Ololo/AndroidStudioProjects/TMDB_Popular_Movie/app/src/main/res/layout/fragment_detail.xml" value="0.184375" />
+        <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1535" />
         <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.142" />
         <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.142" />
+        <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1535" />
         <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/layout/activity_main.xml" value="0.184375" />
         <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/layout/fragment_detail.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/layout/fragment_main.xml" value="0.1" />
+        <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/layout/fragment_mainn.xml" value="0.184375" />
         <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/layout/item_layout.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/menu/main_menu.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/eisrkov/AndroidStudioProjects/TMDBPopularMovie/app/src/main/res/menu/main_menu.xml" value="0.22" />
       </map>
     </option>
   </component>

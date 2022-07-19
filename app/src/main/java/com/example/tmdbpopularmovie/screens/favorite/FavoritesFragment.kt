@@ -23,16 +23,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initeFields()
     }
-
-    private fun initeFields() {
-        TODO("Not yet implemented")
-    }
-
-
-
-
 
     override fun onDestroy() {
         super.onDestroy()

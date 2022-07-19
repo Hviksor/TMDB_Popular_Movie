@@ -1,5 +1,6 @@
 package com.example.tmdbpopularmovie.screens.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +19,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private suspend fun getTMDBInfo() {
-        tmdbInfo.value = repoRetrofit.getTMDBInformation()
+    private fun getTMDBInfo() {
+        viewModelScope.launch {
+            tmdbInfo.value = repoRetrofit.getTMDBInformation()
+        }
     }
 }

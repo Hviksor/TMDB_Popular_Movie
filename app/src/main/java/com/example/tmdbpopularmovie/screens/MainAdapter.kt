@@ -1,5 +1,6 @@
 package com.example.tmdbpopularmovie.screens
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.example.tmdbpopularmovie.model.MovieItem
 import com.squareup.picasso.Picasso
 
 class MainAdapter : ListAdapter<MovieItem, MainAdapter.MainViewHolder>(DiffUtilResult()) {
-
+    var onClickItem: ((MovieItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
@@ -28,6 +29,9 @@ class MainAdapter : ListAdapter<MovieItem, MainAdapter.MainViewHolder>(DiffUtilR
             .centerCrop()
             .resize(300, 300)
             .into(holder.binding.itemImage)
+        holder.itemView.setOnClickListener {
+            onClickItem?.invoke(item)
+        }
     }
 
 
