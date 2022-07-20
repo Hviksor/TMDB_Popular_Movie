@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbpopularmovie.APP
+import com.example.tmdbpopularmovie.MainActivity
 import com.example.tmdbpopularmovie.R
 import com.example.tmdbpopularmovie.databinding.FragmentMainnBinding
 import com.example.tmdbpopularmovie.screens.MainAdapter
@@ -24,7 +25,8 @@ class MainnFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        menuHost = requireActivity()
+        initMenu()
     }
 
     override fun onCreateView(
@@ -38,13 +40,13 @@ class MainnFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        menuHost = requireActivity()
+
         initFields()
-        initMenu()
         onClick()
     }
 
     private fun initMenu() {
+
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
@@ -66,6 +68,8 @@ class MainnFragment : Fragment() {
 
 
     private fun initFields() {
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as MainActivity).supportActionBar?.title = "Popular Movies"
         rcView = binding.rcView
         mainAdapter = MainAdapter()
         rcView.adapter = mainAdapter

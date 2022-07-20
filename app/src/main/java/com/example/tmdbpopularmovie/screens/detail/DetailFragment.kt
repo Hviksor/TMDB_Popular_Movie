@@ -7,10 +7,12 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.example.tmdbpopularmovie.APP
 import com.example.tmdbpopularmovie.BASE_IMG_URL
 import com.example.tmdbpopularmovie.MainActivity
 import com.example.tmdbpopularmovie.R
 import com.example.tmdbpopularmovie.databinding.FragmentDetailBinding
+import com.example.tmdbpopularmovie.model.MovieItem
 import com.example.tmdbpopularmovie.screens.main.MainnFragment
 import com.squareup.picasso.Picasso
 
@@ -20,6 +22,8 @@ class DetailFragment : Fragment() {
     private val binding get() = mBinding!!
     private lateinit var viewModel: DetailViewModel
     private lateinit var menuHost: MenuHost
+    private var isFavorite = false
+    private lateinit var movieItemTemp: MovieItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         menuHost = requireActivity()
@@ -38,31 +42,64 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         getMovieId()
-
+        initOnClickFavorite()
         initFields()
     }
 
+    private fun initOnClickFavorite() {
+        viewModel.getSingleMovieInfoFromMyDB(movieId)
+        viewModel.singleMovieInfoMyDb.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                isFavorite = true
+            } else {
+                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            }
+
+        }
+
+        binding.imgDetailFavorite.setOnClickListener {
+            if (isFavorite) {
+                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                viewModel.deleteToFavorite(movieItemTemp) {}
+                isFavorite = false
+            } else {
+                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                viewModel.addToFavorite(movieItemTemp) {}
+                isFavorite = true
+            }
+
+        }
+    }
+
     private fun activateMenu() {
-
         (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as MainActivity).supportActionBar?.title = "Favorite Movie"
-
+        (activity as MainActivity).supportActionBar?.title = "Detail Movie"
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                TODO("Not yet implemented")
+                return when (menuItem.itemId) {
+                    android.R.id.home -> {
+                        APP.navController.popBackStack()
+//                        requireActivity().supportFragmentManager.beginTransaction()
+                        true
+                    }
+                    else -> false
+
+                }
             }
 
         })
     }
 
     private fun initFields() {
-        viewModel.getSingleMovieInfo(movieId)
-        viewModel.singleMovieInfo.observe(viewLifecycleOwner) {
-            val movieItemTemp = it.body()
+        viewModel.getSingleMovieInfoTMDB(movieId)
+        viewModel.singleMovieInfo.observe(viewLifecycleOwner) { it ->
+            it.body()?.let {
+                movieItemTemp = it
+            }
             binding.tvDate.text = movieItemTemp?.release_date
             binding.tvDescription.text = movieItemTemp?.overview
             binding.tvTitle.text = movieItemTemp?.title
