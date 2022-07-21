@@ -1,6 +1,7 @@
 package com.example.tmdbpopularmovie.screens.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
@@ -42,13 +43,16 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         getMovieId()
-        initOnClickFavorite()
         initFields()
+        initOnClickFavorite()
+
     }
 
     private fun initOnClickFavorite() {
         viewModel.getSingleMovieInfoFromMyDB(movieId)
-        viewModel.singleMovieInfoMyDb.observe(viewLifecycleOwner) {
+
+        viewModel.singleMovieInfoMyDb?.observe(viewLifecycleOwner) {
+            Log.e("isFavorite", it.toString())
             if (it != null) {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
                 isFavorite = true
@@ -59,14 +63,14 @@ class DetailFragment : Fragment() {
         }
 
         binding.imgDetailFavorite.setOnClickListener {
-            if (isFavorite) {
+            isFavorite = if (isFavorite) {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 viewModel.deleteToFavorite(movieItemTemp) {}
-                isFavorite = false
+                false
             } else {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
                 viewModel.addToFavorite(movieItemTemp) {}
-                isFavorite = true
+                true
             }
 
         }

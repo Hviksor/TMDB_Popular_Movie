@@ -81,7 +81,7 @@ class MainnFragment : Fragment() {
     private fun onClick() {
         mainAdapter.onClickItem = {
             val bundle = Bundle()
-            bundle.putInt(MOVIE_ID, it.id)
+            it.id?.let { it1 -> bundle.putInt(MOVIE_ID, it1) }
             APP.navController.navigate(R.id.action_mainnFragment_to_detailFragment2, bundle)
         }
     }
