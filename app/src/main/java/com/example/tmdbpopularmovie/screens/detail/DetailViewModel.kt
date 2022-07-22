@@ -1,5 +1,7 @@
 package com.example.tmdbpopularmovie.screens.detail
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,9 +14,8 @@ import retrofit2.Response
 
 class DetailViewModel : ViewModel() {
     val repo = RetroFitRepository()
-
     val singleMovieInfo: MutableLiveData<Response<MovieItem>> = MutableLiveData()
-    val singleMovieInfoMyDb: MutableLiveData<MovieItem>? = null
+    val isFavorite: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getSingleMovieInfoTMDB(movieId: Int) {
         viewModelScope.launch {
@@ -22,16 +23,10 @@ class DetailViewModel : ViewModel() {
         }
     }
 
-    fun getSingleMovieInfoFromMyDB(movieId: Int) {
-        viewModelScope.launch {
-            val result = REALISATION_DB.getSingleMovieInfo(movieId).value
-
-            if (result == null) {
-                singleMovieInfoMyDb?.value = null
-            } else {
-                singleMovieInfoMyDb?.value = result
-            }
-
+    fun chekFavorite(movieId: Int) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val result = REALISATION_DB.chekFavorite(movieId)
+            isFavorite.postValue(result)
         }
     }
 
@@ -47,7 +42,6 @@ class DetailViewModel : ViewModel() {
             REALISATION_DB.deleteMovieFromFavorite(movieItem, onSuccess)
         }
     }
-
 
 
 }

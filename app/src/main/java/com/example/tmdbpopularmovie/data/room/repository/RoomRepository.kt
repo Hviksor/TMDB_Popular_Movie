@@ -7,5 +7,7 @@ interface RoomRepository {
     suspend fun deleteMovieFromFavorite(movieItem: MovieItem, onSuccess: () -> Unit)
     suspend fun insertMovieFromFavorite(movieItem: MovieItem, onSuccess: () -> Unit)
     val allMovie: LiveData<List<MovieItem>>
-    suspend fun getSingleMovieInfo(movieId: Int): LiveData<MovieItem>
+
+    //   suspend fun chekFavorite(movieId: Int): LiveData<MovieItem>
+    suspend fun chekFavorite(movieId: Int): Boolean
 }

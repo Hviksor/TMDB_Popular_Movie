@@ -8,6 +8,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.lifecycle.lifecycleScope
 import com.example.tmdbpopularmovie.APP
 import com.example.tmdbpopularmovie.BASE_IMG_URL
 import com.example.tmdbpopularmovie.MainActivity
@@ -16,6 +17,7 @@ import com.example.tmdbpopularmovie.databinding.FragmentDetailBinding
 import com.example.tmdbpopularmovie.model.MovieItem
 import com.example.tmdbpopularmovie.screens.main.MainnFragment
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
     private var movieId: Int = MOVIE_ID_DEFAULT
@@ -49,20 +51,22 @@ class DetailFragment : Fragment() {
     }
 
     private fun initOnClickFavorite() {
-        viewModel.getSingleMovieInfoFromMyDB(movieId)
+        viewModel.getSingleMovieInfoTMDB(movieId)
+        viewModel.chekFavorite(movieId)
 
-        viewModel.singleMovieInfoMyDb?.observe(viewLifecycleOwner) {
-            Log.e("isFavorite", it.toString())
-            if (it != null) {
+        viewModel.isFavorite.observe(viewLifecycleOwner) {
+
+            isFavorite = if (it) {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-                isFavorite = true
+                true
             } else {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                false
             }
-
         }
 
         binding.imgDetailFavorite.setOnClickListener {
+
             isFavorite = if (isFavorite) {
                 binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 viewModel.deleteToFavorite(movieItemTemp) {}
@@ -72,7 +76,6 @@ class DetailFragment : Fragment() {
                 viewModel.addToFavorite(movieItemTemp) {}
                 true
             }
-
         }
     }
 

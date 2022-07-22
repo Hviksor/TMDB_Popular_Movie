@@ -53,9 +53,7 @@ class FavoritesFragment : Fragment() {
 
     }
 
-
     private fun activateMenu() {
-
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
             }
