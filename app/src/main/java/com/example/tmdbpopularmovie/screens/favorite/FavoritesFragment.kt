@@ -13,6 +13,7 @@ import com.example.tmdbpopularmovie.R
 import com.example.tmdbpopularmovie.databinding.FragmentDetailBinding
 import com.example.tmdbpopularmovie.databinding.FragmentFavoritesBinding
 import com.example.tmdbpopularmovie.screens.MainAdapter
+import com.example.tmdbpopularmovie.screens.main.MainnFragment
 
 class FavoritesFragment : Fragment() {
     private var mBinding: FragmentFavoritesBinding? = null
@@ -39,6 +40,15 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
         initFields()
+        initOnClick()
+    }
+
+    private fun initOnClick() {
+        mainAdapter.onClickItem = {
+            val bundle = Bundle()
+            it.id?.let { it1 -> bundle.putInt(MainnFragment.MOVIE_ID, it1) }
+            APP.navController.navigate(R.id.action_favoritesFragment_to_detailFragment2, bundle)
+        }
     }
 
     private fun initFields() {

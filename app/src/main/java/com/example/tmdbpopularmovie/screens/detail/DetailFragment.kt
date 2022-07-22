@@ -26,7 +26,7 @@ class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
     private lateinit var menuHost: MenuHost
     private var isFavorite = false
-    private lateinit var movieItemTemp: MovieItem
+    var movieItemTemp: MovieItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         menuHost = requireActivity()
@@ -38,6 +38,8 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentDetailBinding.inflate(layoutInflater, container, false)
+
+
         return binding.root
     }
 
@@ -66,16 +68,18 @@ class DetailFragment : Fragment() {
         }
 
         binding.imgDetailFavorite.setOnClickListener {
-
-            isFavorite = if (isFavorite) {
-                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                viewModel.deleteToFavorite(movieItemTemp) {}
-                false
-            } else {
-                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-                viewModel.addToFavorite(movieItemTemp) {}
-                true
+            movieItemTemp?.let {
+                isFavorite = if (isFavorite) {
+                    binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    viewModel.deleteToFavorite(movieItemTemp!!) {}
+                    false
+                } else {
+                    binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    viewModel.addToFavorite(movieItemTemp!!) {}
+                    true
+                }
             }
+
         }
     }
 
@@ -101,12 +105,11 @@ class DetailFragment : Fragment() {
         })
     }
 
+
     private fun initFields() {
         viewModel.getSingleMovieInfoTMDB(movieId)
-        viewModel.singleMovieInfo.observe(viewLifecycleOwner) { it ->
-            it.body()?.let {
-                movieItemTemp = it
-            }
+        viewModel.singleMovieInfo.observe(viewLifecycleOwner) {
+            movieItemTemp = it.body()!!
             binding.tvDate.text = movieItemTemp?.release_date
             binding.tvDescription.text = movieItemTemp?.overview
             binding.tvTitle.text = movieItemTemp?.title
@@ -116,6 +119,7 @@ class DetailFragment : Fragment() {
                 .resize(400, 400)
                 .into(binding.imgDetail)
         }
+
     }
 
     private fun getMovieId() {
